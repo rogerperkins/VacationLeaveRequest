@@ -1,0 +1,308 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Language" content="en-us">
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+    <meta name="ProgId" content="FrontPage.Editor.Document">
+    <title>Leave Request</title>
+
+    <link rel=Stylesheet href="{{url_for('static', filename='stylesheet.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.css')}}">
+
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-3.6.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.js')}}"></script>
+
+<style type="text/css">
+body {
+	background: #FFF;
+	color: #000;
+	font: normal normal 14px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 10px;
+	padding: 0
+}
+
+//table, th, td {
+//  border: 1px solid black;
+//}
+</style>
+
+<script type="text/javascript">
+<!--
+window.onload = function() {
+    // get userid
+    $.ajax({
+        type: "POST",
+        url: "/getuser",
+        success: function(obj) {
+            console.log(obj);
+            document.getElementById('status').textContent = obj;
+            sessionStorage.userid = obj.trim();
+        },
+        error: function(data) {
+            console.log(data.responseText);
+			document.getElementById('status').textContent = 'See Console Log';
+        }
+    });
+
+    document.getElementById('fromDate').innerHTML = '<i>Select Date/Time</i>';
+    document.getElementById('toDate').innerHTML = '<i>Select Date/Time</i>';
+
+    // am
+    $('select[name="time"]').append($('<option>', { value: '0000', text : '12:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0030', text : '12:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0100', text : '01:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0130', text : '01:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0200', text : '02:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0230', text : '02:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0300', text : '03:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0330', text : '03:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0400', text : '04:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0430', text : '04:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0500', text : '05:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0530', text : '05:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0600', text : '06:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0630', text : '06:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0700', text : '07:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0730', text : '07:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0800', text : '08:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0830', text : '08:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0900', text : '09:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0930', text : '09:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '1000', text : '10:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '1030', text : '10:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '1100', text : '11:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '1130', text : '11:30 am' }));
+
+    // pm
+    $('select[name="time"]').append($('<option>', { value: '1200', text : '12:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1230', text : '12:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1300', text : '01:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1330', text : '01:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1400', text : '02:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1430', text : '02:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1500', text : '03:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1530', text : '03:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1600', text : '04:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1630', text : '04:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1700', text : '05:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1730', text : '05:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1800', text : '06:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1830', text : '06:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1900', text : '07:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1930', text : '07:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2000', text : '08:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2030', text : '08:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2100', text : '09:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2130', text : '09:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2200', text : '10:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2230', text : '10:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2300', text : '11:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2330', text : '11:30 pm' }));
+
+    document.getElementById('hrsVA').textContent = '20';
+    document.getElementById('hrsPH').textContent = '8';
+    document.getElementById('hrsEL').textContent = '0';
+    document.getElementById('hrsBO').textContent = '2';
+    document.getElementById('hrsAccrued').textContent = '30';
+}
+
+// https://jqueryui.com/datepicker/#date-range
+$( function() {
+    var dateFormat = "mm/dd/yy",
+        from = $( "#from" ).datepicker({
+          minDate: 0,
+          changeMonth: true,
+          numberOfMonths: 1
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+          document.getElementById('fromDate').textContent = this.value;
+          if (document.getElementById('toDate').textContent == 'Select Date/Time') {
+            document.getElementById('toDate').textContent = this.value;
+          }
+          lr();
+        }),
+        to = $( "#to" ).datepicker({
+          minDate: 0,
+          changeMonth: true,
+          numberOfMonths: 1
+        })
+        .on( "change", function() {
+          from.datepicker( "option", "maxDate", getDate( this ) );
+          document.getElementById('toDate').textContent = this.value;
+          lr();
+        });
+
+    function getDate( element ) {
+        return $.datepicker.parseDate( dateFormat, element.value );
+    }
+
+});
+
+function lr() {
+    fd = document.getElementById('fromDate');
+    ft = document.getElementById('fromTime');
+    td = document.getElementById('toDate');
+    tt = document.getElementById('toTime');
+
+    if (fd.textContent != 'Select Date/Time' && td.textContent != 'Select Date/Time') {
+        document.getElementById('lr').innerHTML = 'Leave Requested: '
+              + ' From <b>' + fd.textContent + '</b> @ <b>' + ft.options[ft.selectedIndex].text + '</b>'
+             + ' until <b>' + td.textContent + '</b> @ <b>' + tt.options[tt.selectedIndex].text + '</b>';
+
+        hrsRequested = document.getElementById('hrsRequested').value;
+        hrsAccrued = document.getElementById('hrsAccrued').textContent;
+        hrsRemaining = parseFloat(hrsAccrued) - parseFloat(hrsRequested);
+
+        if (hrsRemaining >= 0) {
+            document.getElementById('submitRequest').disabled = '';
+        } else {
+            document.getElementById('submitRequest').disabled = 'disabled';
+        }
+    }
+}
+
+function calcRemaining() {
+
+    hrsRequested = document.getElementById('hrsRequested').value;
+    hrsAccrued = document.getElementById('hrsAccrued').textContent;
+    hrsRemaining = parseFloat(hrsAccrued) - parseFloat(hrsRequested);
+
+    document.getElementById('hrsRemaining').textContent = hrsRemaining;
+
+    fd = document.getElementById('fromDate');
+    td = document.getElementById('toDate');
+
+    if (fd.textContent != 'Select Date/Time' && td.textContent != 'Select Date/Time') {
+        if (hrsRemaining >= 0) {
+            document.getElementById('submitRequest').disabled = '';
+        } else {
+            document.getElementById('submitRequest').disabled = 'disabled';
+        }
+    }
+}
+
+function submitRequest() {
+    $.ajax({
+        type: "POST",
+        url: "/submitrequest",
+        data: {
+                id: sessionStorage.getItem('userid'),
+                fromDate: document.getElementById('fromDate').textContent,
+                fromTime: document.getElementById('fromTime').value,
+                toDate: document.getElementById('toDate').textContent,
+                toTime: document.getElementById('toTime').value,
+                hours: document.getElementById('hrsRequested').value,
+                comments: document.getElementById('comments').value
+              },
+        success: function(obj) {
+            console.log(obj);
+            if (obj == '1') {
+                document.getElementById('status').textContent = 'Request Submitted';
+                window.location='/history';
+            } else {
+			    document.getElementById('status').textContent = 'See Console Log';
+			}
+        },
+        error: function(data) {
+            console.log(data.responseText);
+			document.getElementById('status').textContent = 'See Console Log';
+        }
+    });
+
+}
+
+function key(keyCode) {
+    return keyCode === 8 || keyCode === 9 || keyCode === 46
+}
+
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+}
+
+-->
+</script>
+
+</head>
+
+<body topmargin="0" leftmargin="0" text="#000099">
+
+    <img src="{{url_for('static', filename='images/150-x-150-pix-city-seal-rev.jpg')}}" width="90" height="90" style="position:fixed;top:10;left10;"/>
+    <span id="status" class=xl244 style="font-size:smaller;position: fixed;top: 10;right: 10;"><i>Loading...</i></span>
+    <center><font size="+2">City of Long Beach</font></center>
+    <center><font size="+1">Leave Request</font></center>
+    <br />
+
+    <table cellspacing='10' cellpadding='0' border="1" style="margin: 0 auto;">
+        <tr>
+            <td>
+                From: <span id="fromDate"></span>
+            </td>
+            <td>
+                <select name="time" id="fromTime" onchange="lr();"></select>
+            </td>
+            <td>
+                Until: <span id="toDate"></span>
+            </td>
+            <td>
+                <select name="time" id="toTime" onchange="lr();"></select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="220" style="vertical-align:top">
+                <div id="from"></div>
+            </td>
+            <td colspan="2" height="220" style="vertical-align:top">
+                <div id="to"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"><span id="lr">&nbsp;</span></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                Vacation: <span id="hrsVA" title="Hard coded value for testing."></span>&nbsp;&nbsp;
+                Personal Holiday: <span id="hrsPH" title="Hard coded value for testing."></span>&nbsp;&nbsp;
+                Executive Leave: <span id="hrsEL" title="Hard coded value for testing."></span>&nbsp;&nbsp;
+                Banked Overtime: <span id="hrsBO" title="Hard coded value for testing."></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:right">
+                Total Hours of Leave Time Requested:&nbsp;
+            </td>
+            <td colspan="2">
+                <input id="hrsRequested" maxlength="4" size="3em" onchange="calcRemaining();"/> hours
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:right">
+                Total Leave Hours Accrued:&nbsp;
+            </td>
+            <td>
+                <span id="hrsAccrued" title="Hard coded value for testing."></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:right">
+                Total Leave Hours Remaining:&nbsp;
+            </td>
+            <td>
+                <span id="hrsRemaining"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <label for="comments">Comments:</label><br />
+                <textarea id="comments" rows="4" cols="50" style="resize: none;"></textarea>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+    <center><button id="submitRequest" onclick="submitRequest()" disabled>Submit</button></center>
+</body>
+</html>

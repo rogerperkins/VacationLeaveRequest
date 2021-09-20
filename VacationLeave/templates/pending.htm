@@ -1,0 +1,583 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Language" content="en-us">
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Leave Request - Pending</title>
+
+    <link rel=Stylesheet href="{{url_for('static', filename='stylesheet.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.css')}}">
+
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-3.6.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.js')}}"></script>
+
+<style>
+<!--
+A {
+    text-decoration:none;
+    color:#000000;
+    font-size:9pt;
+}
+-->
+<!--table
+	{mso-displayed-decimal-separator:"\.";
+	mso-displayed-thousand-separator:"\,";}
+@page
+	{margin:.25in 0in 0in 0in;
+	mso-header-margin:0in;
+	mso-footer-margin:0in;
+	mso-page-orientation:landscape;
+	mso-horizontal-page-align:center;}
+-->
+<!--
+div.fixed {
+    bottom:0;
+    left:0;
+    right:0;
+    position:fixed;
+    height: 38px;
+    background-color:#808080;
+-->
+}
+</style>
+
+<style type="text/css">
+<!--
+/* http://www.imaputz.com/cssStuff/bigFourVersion.html */
+/* Terence Ordona, portal[AT]imaputz[DOT]com         */
+/* http://creativecommons.org/licenses/by-sa/2.0/    */
+
+/* begin some basic styling here                     */
+body {
+	background: #FFF;
+	color: #000;
+	font: normal normal 14px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 10px;
+	padding: 0
+}
+
+table, td, a {
+	color: #000;
+	font: normal normal 14px Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+
+h1 {
+	font: normal normal 18px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0
+}
+
+h2 {
+	font: normal normal 16px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0
+}
+
+h3 {
+	font: normal normal 13px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #008000;
+	margin: 0 0 15px 0
+}
+/* end basic styling                                 */
+
+/* define height and width of scrollable area. Add 16px to width for scrollbar    height: 285px;      */
+div.tableContainer {
+	clear: both;
+	border: 1px solid #963;
+	height: 400px;
+	overflow: auto;
+    //margin: auto;
+	width: 1088px
+}
+
+/* Reset overflow value to hidden for all non-IE browsers. */
+html>body div.tableContainer {
+	overflow: hidden;
+	width: 1088px
+}
+
+/* define width of table. IE browsers only                 */
+div.tableContainer table {
+	float: left;
+	width: 1072px
+}
+
+/* define width of table. Add 16px to width for scrollbar.           */
+/* All other non-IE browsers.                                        */
+html>body div.tableContainer table {
+	width: 1088px
+}
+
+/* set table header to a fixed position. WinIE 6.x only                                       */
+/* In WinIE 6.x, any element with a position property set to relative and is a child of       */
+/* an element that has an overflow property set, the relative value translates into fixed.    */
+/* Ex: parent element DIV with a class of tableContainer has an overflow property set to auto */
+thead.fixedHeader tr {
+	position: relative
+}
+
+/* set THEAD element to have block level attributes. All other non-IE browsers            */
+/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+html>body thead.fixedHeader tr {
+	display: block
+}
+
+/* make the TH elements pretty */
+thead.fixedHeader th {
+	background: #C96;
+	border-left: 1px solid #EB8;
+	border-right: 1px solid #B74;
+	border-top: 1px solid #EB8;
+	font-weight: normal;
+	padding: 4px 3px;
+	text-align: left
+}
+
+/* make the A elements pretty. makes for nice clickable headers                */
+thead.fixedHeader a, thead.fixedHeader a:link, thead.fixedHeader a:visited {
+	color: #FFF;
+	display: block;
+	text-decoration: none;
+	width: 100%
+}
+
+/* make the A elements pretty. makes for nice clickable headers                */
+/* WARNING: swapping the background on hover may cause problems in WinIE 6.x   */
+thead.fixedHeader a:hover {
+	color: #FFF;
+	display: block;
+	text-decoration: underline;
+	width: 100%
+}
+
+/* define the table content to be scrollable                       height: 200px;                       */
+/* set TBODY element to have block level attributes. All other non-IE browsers            */
+/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+/* induced side effect is that child TDs no longer accept width: auto                     */
+html>body tbody.scrollContent {
+	display: block; // table-row-group;
+	overflow: auto;
+	width: 100%;
+	overflow-y: scroll;
+}
+
+/* make TD elements pretty. Provide alternating classes for striping the table */
+/* http://www.alistapart.com/articles/zebratables/                             */
+tbody.scrollContent td, tbody.scrollContent tr.normalRow td {
+	background: #FFF;
+	border-bottom: none;
+	border-left: none;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #DDD;
+	padding: 2px 3px 3px 4px
+}
+
+tbody.scrollContent tr.alternateRow td {
+	background: #EEE;
+	border-bottom: none;
+	border-left: none;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #DDD;
+	padding: 2px 3px 3px 4px
+}
+
+// tbody.scrollContent tr:hover { background-color: lightyellow !important; cursor: pointer; }
+// tbody.scrollContent tr:hover td { background: transparent; }
+
+td.action:hover { background: transparent; background-color: #ffff66 !important; }
+
+
+/* define width of TH elements: 1st, 2nd, and 3rd respectively.          */
+/* Add 16px to last TH for scrollbar padding. All other non-IE browsers. */
+/* http://www.w3.org/TR/REC-CSS2/selector.html#adjacent-selectors        */
+
+html>body thead.fixedHeader th {
+	width: 165px
+}
+
+html>body thead.fixedHeader th + th {
+	width: 165px
+}
+
+html>body thead.fixedHeader th + th + th {
+	width: 50px
+}
+
+html>body thead.fixedHeader th + th + th + th {
+	width: 165px
+}
+
+html>body thead.fixedHeader th + th + th + th + th {
+	width: 125px
+}
+
+html>body thead.fixedHeader th + th + th + th + th + th {
+	width: 125px
+}
+
+html>body thead.fixedHeader th + th + th + th + th + th + th {
+	width: 165px
+}
+
+html>body thead.fixedHeader th + th + th + th + th + th + th + th {
+	width: 64px
+}
+
+/* define width of TD elements: 1st, 2nd, and 3rd respectively.          */
+/* All other non-IE browsers.                                            */
+/* http://www.w3.org/TR/REC-CSS2/selector.html#adjacent-selectors        */
+
+html>body tbody.scrollContent td {
+	width: 165px
+}
+
+html>body tbody.scrollContent td + td {
+	width: 165px
+}
+
+html>body tbody.scrollContent td + td + td {
+	width: 50px;
+}
+
+html>body tbody.scrollContent td + td + td + td {
+	width: 165px;
+}
+
+html>body tbody.scrollContent td + td + td + td + td {
+	width: 125px;
+}
+
+html>body tbody.scrollContent td + td + td + td + td + td {
+	width: 125px;
+}
+
+html>body tbody.scrollContent td + td + td + td + td + td + td {
+	width: 165px;
+}
+
+html>body tbody.scrollContent td + td + td + td + td + td + td + td {
+	width: 20px;
+}
+
+html>body tbody.scrollContent td + td + td + td + td + td + td + td + td {
+	width: 20px;
+}
+-->
+
+</style>
+
+<script type="text/javascript">
+<!--
+/* http://www.alistapart.com/articles/zebratables/ */
+function removeClassName (elem, className) {
+	elem.className = elem.className.replace(className, "").trim();
+}
+
+function addCSSClass (elem, className) {
+	removeClassName (elem, className);
+	elem.className = (elem.className + " " + className).trim();
+}
+
+String.prototype.trim = function() {
+	return this.replace( /^\s+|\s+$/, "" );
+}
+
+function stripedTable() {
+	if (document.getElementById && document.getElementsByTagName) {
+		var allTables = document.getElementsByTagName('table');
+		if (!allTables) { return; }
+
+		for (var i = 0; i < allTables.length; i++) {
+			if (allTables[i].className.match(/[\w\s ]*scrollTable[\w\s ]*/)) {
+				var trs = allTables[i].getElementsByTagName("tr");
+				for (var j = 0; j < trs.length; j++) {
+					removeClassName(trs[j], 'alternateRow');
+					addCSSClass(trs[j], 'normalRow');
+				}
+				for (var k = 0; k < trs.length; k += 2) {
+					removeClassName(trs[k], 'normalRow');
+					addCSSClass(trs[k], 'alternateRow');
+				}
+			}
+		}
+	}
+}
+
+window.onload = function() {
+    //stripedTable();
+
+    $.ajax({
+        type: "POST",
+        url: "/getuser",
+        success: function(obj) {
+            console.log(obj);
+            //document.getElementById('status').textContent = obj;
+            sessionStorage.userid = obj.trim();
+        },
+        error: function(data) {
+            console.log(data.responseText);
+			document.getElementById('status').textContent = 'See Console Log';
+        }
+    });
+
+    getPending();
+}
+
+function getPending() {
+
+    $.ajax({
+        type: "POST",
+        url: "/getpending",
+        data: {
+                id: sessionStorage.getItem('userid')
+              },
+        success: function(data) {
+            console.log(data);
+            //console.log(typeof data);
+
+			if (typeof data == 'string') {
+				document.getElementById('status').textContent = data;
+				console.log(data);
+				return;
+			}
+
+			if (data.pending.length > 0) {
+
+			    sessionStorage.pending = JSON.stringify(data.pending);
+			    sessionStorage.sort = '00'; // 0 - desc, 1 - asc
+
+                arrow = "{{url_for('static', filename='images/1608845_sort_icon.png')}}";
+
+				var thead = '<thead class="fixedHeader">'
+						  + '  <tr>'
+						  + '	<th>From<img id="frmarrow" style="vertical-align:bottom; cursor: pointer;" '
+						        + 'title = "Sort" src="' + arrow + '" onclick="sortPending(\'frm\')" /></th>'
+						  + '	<th>To</th>'
+						  + '	<th>Hours</th>'
+						  + '	<th>Requested<img id="reqarrow" style="vertical-align:bottom; cursor: pointer;" '
+						        + 'title = "Sort" src="' + arrow + '" onclick="sortPending(\'req\')" /></th>'
+						  + '	<th>Status</th>'
+						  + '	<th>By</th>'
+						  + '	<th>Date</th>'
+						  + '	<th colspan="2">Action</th>'
+						  + '  </tr>'
+						  + '</thead>';
+
+                aprv = "{{url_for('static', filename='images/49489_check_icon.png')}}";
+                rjct = "{{url_for('static', filename='images/14125_cancel_cross_delete_remove_x_icon.png')}}";
+
+				var r = new Array();
+				for (var key=0, size=data.pending.length; key<size; key++){
+
+					p = data.pending[key]
+
+					s = (parseInt(key.toString(2),2) & 1) ? 'alternateRow' : 'normalRow'
+					b = p.statusby ? p.statusby.replace('\\','\\\\') : ''
+
+                    r[key] = '<tr title="' + p.comments + '" class="' + s + '">'
+                            + '<td>' + p.fromdate + '</td>' + '<td>' + p.todate + '</td>'
+                            + '<td style="text-align:center">' + p.hours + '</td>' + '<td>' + p.requestdate + '</td>'
+                            + '<td>' + p.status + '</td>' + '<td>' + p.statusby + '</td>'
+                            + '<td>' + p.statusdate + '</td>'
+                            + '<td class="action"><img style="cursor: pointer;" title="Approve" src="' + aprv
+                            + '" onclick="doStat(\'Approved\',\'' + b + '\',\'' + p.requestdatestring + '\')" /></td>'
+                            + '<td class="action"><img style="cursor: pointer;" title="Reject" src="' + rjct
+                            + '" onclick="doStat(\'Rejected\',\'' + b + '\',\'' + p.requestdatestring + '\')" /></td>'
+                            + '</tr>';
+				}
+
+				if (r.length) {
+				    if (r.length > 50) {
+				        document.getElementsByTagName("tbody")[0].style.height = (tc1.offsetHeight - 26).toString();
+				    }
+					var pending = thead + '<tbody class="scrollContent">' + r.join('') + '</tbody>';
+					// $('#tableContainer').show();
+					$('#dataTable1').html(pending);
+					//stripedTable();
+				}
+
+				var tc1 = document.getElementById("tableContainer");
+				//var dt1 = document.getElementById("dataTable1");
+				var dtb1 = document.getElementsByTagName("tbody")[0];
+
+                //console.log('tc1.offsetHeight: ' + tc1.offsetHeight);
+                //console.log('dtb1.offsetHeight: ' + dtb1.offsetHeight);
+
+                if (dtb1.offsetHeight < (tc1.offsetHeight - 28)) {
+                    document.getElementById("tableContainer").style.height = (dtb1.offsetHeight + 26).toString();
+                } else {
+                    document.getElementsByTagName("tbody")[0].style.height = (tc1.offsetHeight - 26).toString();
+                }
+
+                //console.log('tc1.offsetHeight: ' + tc1.offsetHeight);
+                //console.log('dtb1.offsetHeight: ' + dtb1.offsetHeight);
+
+                document.getElementById('status').textContent = sessionStorage.getItem('userid');
+			}
+        },
+        error: function(data) {
+            console.log(data.responseText);
+			document.getElementById('status').textContent = 'See Console Log';
+        }
+    });
+
+}
+
+function doStat(status, emp, requested) {
+    $.ajax({
+        type: "POST",
+        url: "/updatestatus",
+        data: {
+                status: status,
+                id: sessionStorage.getItem('userid'),
+                emp: emp,
+                requestdate: requested
+              },
+        success: function(obj) {
+            console.log(obj);
+            //document.getElementById('status').textContent = obj;
+            getPending();
+        },
+        error: function(data) {
+            console.log(data.responseText);
+			document.getElementById('status').textContent = 'See Console Log';
+        }
+    });
+}
+
+function sortPending(field) {
+    const sortArray = JSON.parse(sessionStorage.getItem('pending'));
+    const sortIndicator = sessionStorage.getItem('sort');
+
+    arrow = "{{url_for('static', filename='images/1608845_sort_icon.png')}}";
+    uparrow = "{{url_for('static', filename='images/1608844_sort_up_icon.png')}}";
+    dnarrow = "{{url_for('static', filename='images/1608403_down_sort_icon.png')}}";
+
+    var pending = new Array();
+
+    switch (field) {
+        case 'frm':
+            var up = -1;
+            var dn = 1;
+
+            if (sortIndicator == '10') {
+                up = 1; dn = -1;
+                document.getElementById('frmarrow').src = uparrow;
+			    sessionStorage.sort = '00'; // 0 - desc, 1 - asc
+            } else {
+                document.getElementById('frmarrow').src = dnarrow;
+			    sessionStorage.sort = '10'; // 0 - desc, 1 - asc
+            }
+            document.getElementById('reqarrow').src = arrow;
+
+            pending = sortArray.sort((a, b) => {
+              if (a.fromdatestring < b.fromdatestring)
+                return up; //-1;
+              if (a.fromdatestring > b.fromdatestring)
+                return dn; // 1;
+              return 0;
+            });
+            break;
+        case 'req':
+            var up = -1;
+            var dn = 1;
+
+            if (sortIndicator == '01') {
+                up = 1; dn = -1;
+                document.getElementById('reqarrow').src = uparrow;
+			    sessionStorage.sort = '00'; // 0 - desc, 1 - asc
+            } else {
+                document.getElementById('reqarrow').src = dnarrow;
+			    sessionStorage.sort = '01'; // 0 - desc, 1 - asc
+            }
+            document.getElementById('frmarrow').src = arrow;
+
+            pending = sortArray.sort((a, b) => {
+              if (a.requestdatestring < b.requestdatestring)
+                return up; //-1;
+              if (a.requestdatestring > b.requestdatestring)
+                return dn; // 1;
+              return 0;
+            });
+            break;
+    }
+
+    aprv = "{{url_for('static', filename='images/49489_check_icon.png')}}";
+    rjct = "{{url_for('static', filename='images/14125_cancel_cross_delete_remove_x_icon.png')}}";
+
+    var r = new Array();
+    for (var key=0, size=pending.length; key<size; key++){
+
+        p = pending[key]
+
+        s = (parseInt(key.toString(2),2) & 1) ? 'alternateRow' : 'normalRow'
+        b = p.statusby ? p.statusby.replace('\\','\\\\') : ''
+
+        r[key] = '<tr title="' + p.comments + '" class="' + s + '">'
+                + '<td>' + p.fromdate + '</td>' + '<td>' + p.todate + '</td>'
+                + '<td style="text-align:center">' + p.hours + '</td>' + '<td>' + p.requestdate + '</td>'
+                + '<td>' + p.status + '</td>' + '<td>' + p.statusby + '</td>'
+                + '<td>' + p.statusdate + '</td>'
+                + '<td class="action"><img style="cursor: pointer;" title="Approve" src="' + aprv
+                + '" onclick="doStat(\'Approved\',\'' + b + '\',\'' + p.requestdatestring + '\')" /></td>'
+                + '<td class="action"><img style="cursor: pointer;" title="Reject" src="' + rjct
+                + '" onclick="doStat(\'Rejected\',\'' + b + '\',\'' + p.requestdatestring + '\')" /></td>'
+                + '</tr>';
+    }
+
+    if (r.length) { $('#dataTable1 tbody').html(r.join('')); }
+
+}
+
+function key(keyCode) {
+    return keyCode === 8 || keyCode === 9 || keyCode === 46
+}
+
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+}
+-->
+</script>
+
+</head>
+
+<body topmargin="0" leftmargin="0" text="#000099">
+
+    <img src="{{url_for('static', filename='images/150-x-150-pix-city-seal-rev.jpg')}}" width="90" height="90" style="position:fixed;top:10;left10;"/>
+    <span id="status" class=xl244 style="font-size:smaller;position: fixed;top: 10;right: 10;"><i>Loading...</i></span>
+    <center><font size="+2">City of Long Beach</font></center>
+    <center><font size="+1">Leave Request - Pending</font></center>
+    <br />
+    <center>
+        <button onclick="window.location='/request';">New Request</button>
+        <button onclick="window.location='/history';">History</button>
+        <button onclick="window.location='/pending';">Pending</button>
+        <button onclick="window.location='/unassigned';">Unassigned</button>
+        <button onclick="window.location='/org';">Reassign</button>
+    </center>
+    <br /><br />
+
+    <div id="tableContainer" class="tableContainer" style="margin: 0 auto;">
+        <table id="dataTable1" border="0" cellpadding="0" cellspacing="0" class="scrollTable">
+            <thead class="fixedHeader">
+            <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Hours</th>
+                <th>Requested</th>
+                <th>Status</th>
+                <th>By</th>
+                <th>Date</th>
+                <th colspan="2"> </th>
+            </tr>
+            </thead>
+            <tbody class="scrollContent">
+            <tr>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+

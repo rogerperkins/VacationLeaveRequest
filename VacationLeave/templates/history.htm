@@ -1,0 +1,803 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Language" content="en-us">
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Leave Request - History</title>
+
+    <link rel=Stylesheet href="{{url_for('static', filename='stylesheet.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.css')}}">
+
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-3.6.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.js')}}"></script>
+
+<style>
+<!--
+A {
+    text-decoration:none;
+    color:#000000;
+    font-size:9pt;
+}
+-->
+<!--table
+	{mso-displayed-decimal-separator:"\.";
+	mso-displayed-thousand-separator:"\,";}
+@page
+	{margin:.25in 0in 0in 0in;
+	mso-header-margin:0in;
+	mso-footer-margin:0in;
+	mso-page-orientation:landscape;
+	mso-horizontal-page-align:center;}
+-->
+<!--
+div.fixed {
+    bottom:0;
+    left:0;
+    right:0;
+    position:fixed;
+    height: 38px;
+    background-color:#808080;
+-->
+}
+</style>
+
+<style type="text/css">
+<!--
+/* http://www.imaputz.com/cssStuff/bigFourVersion.html */
+/* Terence Ordona, portal[AT]imaputz[DOT]com         */
+/* http://creativecommons.org/licenses/by-sa/2.0/    */
+
+/* begin some basic styling here                     */
+body {
+	background: #FFF;
+	color: #000;
+	font: normal normal 14px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 10px;
+	padding: 0
+}
+
+table, td, a {
+	color: #000;
+	font: normal normal 14px Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+
+h1 {
+	font: normal normal 18px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0
+}
+
+h2 {
+	font: normal normal 16px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin: 0 0 5px 0
+}
+
+h3 {
+	font: normal normal 13px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #008000;
+	margin: 0 0 15px 0
+}
+/* end basic styling                                 */
+
+/* define height and width of scrollable area. Add 16px to width for scrollbar    height: 285px;      */
+div.tableContainer {
+	clear: both;
+	border: 1px solid #963;
+	height: 400px;
+	overflow: auto;
+    //margin: auto;
+	width: 1063px
+}
+
+/* Reset overflow value to hidden for all non-IE browsers. */
+html>body div.tableContainer {
+	overflow: hidden;
+	width: 1063px
+}
+
+/* define width of table. IE browsers only                 */
+div.tableContainer table {
+	float: left;
+	width: 1047px
+}
+
+/* define width of table. Add 16px to width for scrollbar.           */
+/* All other non-IE browsers.                                        */
+html>body div.tableContainer table {
+	width: 1063px
+}
+
+/* set table header to a fixed position. WinIE 6.x only                                       */
+/* In WinIE 6.x, any element with a position property set to relative and is a child of       */
+/* an element that has an overflow property set, the relative value translates into fixed.    */
+/* Ex: parent element DIV with a class of tableContainer has an overflow property set to auto */
+thead.fixedHeader tr {
+	position: relative
+}
+
+/* set THEAD element to have block level attributes. All other non-IE browsers            */
+/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+html>body thead.fixedHeader tr {
+	display: block
+}
+
+/* make the TH elements pretty */
+thead.fixedHeader th {
+	background: #C96;
+	border-left: 1px solid #EB8;
+	border-right: 1px solid #B74;
+	border-top: 1px solid #EB8;
+	font-weight: normal;
+	padding: 4px 3px;
+	text-align: left
+}
+
+/* make the A elements pretty. makes for nice clickable headers                */
+thead.fixedHeader a, thead.fixedHeader a:link, thead.fixedHeader a:visited {
+	color: #FFF;
+	display: block;
+	text-decoration: none;
+	width: 100%
+}
+
+/* make the A elements pretty. makes for nice clickable headers                */
+/* WARNING: swapping the background on hover may cause problems in WinIE 6.x   */
+thead.fixedHeader a:hover {
+	color: #FFF;
+	display: block;
+	text-decoration: underline;
+	width: 100%
+}
+
+/* define the table content to be scrollable                       height: 200px;                       */
+/* set TBODY element to have block level attributes. All other non-IE browsers            */
+/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+/* induced side effect is that child TDs no longer accept width: auto                     */
+html>body tbody.scrollContent {
+	display: block; // table-row-group;
+	overflow: auto;
+	width: 100%;
+	overflow-y: scroll;
+}
+
+/* make TD elements pretty. Provide alternating classes for striping the table */
+/* http://www.alistapart.com/articles/zebratables/                             */
+tbody.scrollContent td, tbody.scrollContent tr.normalRow td {
+	background: #FFF;
+	border-bottom: none;
+	border-left: none;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #DDD;
+	padding: 2px 3px 3px 4px
+}
+
+tbody.scrollContent tr.alternateRow td {
+	background: #EEE;
+	border-bottom: none;
+	border-left: none;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #DDD;
+	padding: 2px 3px 3px 4px
+}
+
+/* define width of TH elements: 1st, 2nd, and 3rd respectively.          */
+/* Add 16px to last TH for scrollbar padding. All other non-IE browsers. */
+/* http://www.w3.org/TR/REC-CSS2/selector.html#adjacent-selectors        */
+
+html>body thead.fixedHeader th {
+	width: 23px
+}
+
+html>body thead.fixedHeader th + th {
+	width: 165px
+}
+
+html>body thead.fixedHeader th + th + th {
+	width: 165px
+}
+
+html>body thead.fixedHeader th + th + th + th {
+	width: 50px
+}
+
+html>body thead.fixedHeader th + th + th + th + th {
+	width: 165px
+}
+
+html>body thead.fixedHeader th + th + th + th + th + th {
+	width: 125px
+}
+
+html>body thead.fixedHeader th + th + th + th + th + th + th {
+	width: 125px
+}
+
+html>body thead.fixedHeader th + th + th + th + th + th + th + th {
+	width: 181px
+}
+
+
+/* define width of TD elements: 1st, 2nd, and 3rd respectively.          */
+/* All other non-IE browsers.                                            */
+/* http://www.w3.org/TR/REC-CSS2/selector.html#adjacent-selectors        */
+
+html>body tbody.scrollContent td {
+	width: 23px
+}
+
+html>body tbody.scrollContent td + td {
+	width: 165px
+}
+
+html>body tbody.scrollContent td + td {
+	width: 165px
+}
+
+html>body tbody.scrollContent td + td + td + td {
+	width: 50px;
+}
+
+html>body tbody.scrollContent td + td + td + td + td {
+	width: 165px;
+}
+
+html>body tbody.scrollContent td + td + td + td + td + td {
+	width: 125px;
+}
+
+html>body tbody.scrollContent td + td + td + td + td + td + td {
+	width: 125px;
+}
+
+html>body tbody.scrollContent td + td + td + td + td + td + td + td {
+	width: 165px;
+}
+
+-->
+
+</style>
+
+<script type="text/javascript">
+<!--
+/* http://www.alistapart.com/articles/zebratables/ */
+function removeClassName (elem, className) {
+	elem.className = elem.className.replace(className, "").trim();
+}
+
+function addCSSClass (elem, className) {
+	removeClassName (elem, className);
+	elem.className = (elem.className + " " + className).trim();
+}
+
+String.prototype.trim = function() {
+	return this.replace( /^\s+|\s+$/, "" );
+}
+
+function stripedTable() {
+	if (document.getElementById && document.getElementsByTagName) {
+		var allTables = document.getElementsByTagName('table');
+		if (!allTables) { return; }
+
+		for (var i = 0; i < allTables.length; i++) {
+			if (allTables[i].className.match(/[\w\s ]*scrollTable[\w\s ]*/)) {
+				var trs = allTables[i].getElementsByTagName("tr");
+				for (var j = 0; j < trs.length; j++) {
+					removeClassName(trs[j], 'alternateRow');
+					addCSSClass(trs[j], 'normalRow');
+				}
+				for (var k = 0; k < trs.length; k += 2) {
+					removeClassName(trs[k], 'normalRow');
+					addCSSClass(trs[k], 'alternateRow');
+				}
+			}
+		}
+	}
+}
+
+window.onload = function() {
+    //stripedTable();
+
+    $.ajax({
+        type: "POST",
+        url: "/getuser",
+        success: function(obj) {
+            console.log(obj);
+            //document.getElementById('status').textContent = obj;
+            sessionStorage.userid = obj.trim();
+        },
+        error: function(data) {
+            console.log(data.responseText);
+			document.getElementById('status').textContent = 'See Console Log';
+        }
+    });
+
+    getHistory();
+}
+
+function getHistory() {
+
+    $.ajax({
+        type: "POST",
+        url: "/gethistory",
+        data: {
+                id: sessionStorage.getItem('userid')
+              },
+        success: function(data) {
+            console.log(data);
+            //console.log(typeof data);
+
+			if (typeof data == 'string') {
+				document.getElementById('status').textContent = data;
+				console.log(data);
+				return;
+			}
+
+			if (data.history.length > 0) {
+
+                if (data.history[0].issuper) {
+                    document.getElementById('superTabs').style.display = '';
+                }
+
+                edit = "{{url_for('static', filename='images/14042_edit_pen_pencil_text_write_icon.png')}}";
+
+				var thead = '<thead class="fixedHeader">'
+						  + '  <tr>'
+						  + '   <th> </th>'
+						  + '	<th>From</th>'
+						  + '	<th>To</th>'
+						  + '	<th>Hours</th>'
+						  + '	<th>Requested</th>'
+						  + '	<th>Status</th>'
+						  + '	<th>By</th>'
+						  + '	<th>Date</th>'
+						  + '  </tr>'
+						  + '</thead>';
+
+				var r = new Array();
+				for (var key=0, size=data.history.length; key<size; key++){
+
+					p = data.history[key]
+
+					s = (parseInt(key.toString(2),2) & 1) ? 'alternateRow' : 'normalRow'
+                    b = p.statusby ? p.statusby.replace('\\','\\\\') : ''
+
+                    r[key] = '<tr title="' + p.comments + '" class="' + s + '">'
+                            + '<td class="action"><img style="cursor: pointer;" title="Edit" src="' + edit
+                            + '" onclick="doEdit(\'' + b + '\',\'' + p.requestdatestring + '\')" /></td>'
+                            + '<td>' + p.fromdate + '</td>' + '<td>' + p.todate + '</td>'
+                            + '<td style="text-align:center">' + p.hours + '</td>' + '<td>' + p.requestdate + '</td>'
+                            + '<td>' + p.status + '</td>' + '<td>' + p.statusby + '</td>'
+                            + '<td>' + p.statusdate + '</td>'
+                            + '</tr>';
+				}
+
+				if (r.length) {
+				    if (r.length > 50) {
+				        document.getElementsByTagName("tbody")[0].style.height = (tc1.offsetHeight - 28).toString();
+				    }
+					var history = thead + '<tbody class="scrollContent">' + r.join('') + '</tbody>';
+					// $('#tableContainer').show();
+					$('#dataTable1').html(history);
+					//stripedTable();
+				}
+
+				var tc1 = document.getElementById("tableContainer");
+				//var dt1 = document.getElementById("dataTable1");
+				var dtb1 = document.getElementsByTagName("tbody")[0];
+
+                //console.log('tc1.offsetHeight: ' + tc1.offsetHeight);
+                //console.log('dtb1.offsetHeight: ' + dtb1.offsetHeight);
+
+                if (dtb1.offsetHeight < (tc1.offsetHeight - 26)) {
+                    document.getElementById("tableContainer").style.height = (dtb1.offsetHeight + 26).toString();
+                } else {
+                    document.getElementsByTagName("tbody")[0].style.height = (tc1.offsetHeight - 26).toString();
+                }
+
+                //console.log('tc1.offsetHeight: ' + tc1.offsetHeight);
+                //console.log('dtb1.offsetHeight: ' + dtb1.offsetHeight);
+
+                document.getElementById('status').textContent = sessionStorage.getItem('userid');
+			}
+        },
+        error: function(data) {
+            console.log(data.responseText);
+			document.getElementById('status').textContent = 'See Console Log';
+        }
+    });
+
+}
+
+// https://jqueryui.com/datepicker/#date-range
+$( function() {
+    var dateFormat = "mm/dd/yy",
+        from = $( "#from" ).datepicker({
+          minDate: 0,
+          changeMonth: true,
+          numberOfMonths: 1
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+          document.getElementById('fromDate').textContent = this.value;
+          if (document.getElementById('toDate').textContent == 'Select Date/Time') {
+            document.getElementById('toDate').textContent = this.value;
+          }
+          lr();
+        }),
+        to = $( "#to" ).datepicker({
+          minDate: 0,
+          changeMonth: true,
+          numberOfMonths: 1
+        })
+        .on( "change", function() {
+          from.datepicker( "option", "maxDate", getDate( this ) );
+          document.getElementById('toDate').textContent = this.value;
+          lr();
+        });
+
+    function getDate( element ) {
+        return $.datepicker.parseDate( dateFormat, element.value );
+    }
+
+});
+
+function lr() {
+    fd = document.getElementById('fromDate');
+    ft = document.getElementById('fromTime');
+    td = document.getElementById('toDate');
+    tt = document.getElementById('toTime');
+
+    if (fd.textContent != 'Select Date/Time' && td.textContent != 'Select Date/Time') {
+        document.getElementById('lr').innerHTML = 'Leave Requested: '
+              + ' From <b>' + fd.textContent + '</b> @ <b>' + ft.options[ft.selectedIndex].text + '</b>'
+             + ' until <b>' + td.textContent + '</b> @ <b>' + tt.options[tt.selectedIndex].text + '</b>';
+
+        hrsRequested = document.getElementById('hrsRequested').value;
+        hrsAccrued = document.getElementById('hrsAccrued').textContent;
+        hrsRemaining = parseFloat(hrsAccrued) - parseFloat(hrsRequested);
+
+        document.getElementById('hrsRemaining').textContent = hrsRemaining;
+
+        if (hrsRemaining >= 0) {
+            document.getElementById('resubmitRequest').disabled = '';
+        } else {
+            document.getElementById('resubmitRequest').disabled = 'disabled';
+        }
+    }
+}
+
+function calcRemaining() {
+
+    hrsRequested = document.getElementById('hrsRequested').value;
+    hrsAccrued = document.getElementById('hrsAccrued').textContent;
+    hrsRemaining = parseFloat(hrsAccrued) - parseFloat(hrsRequested);
+
+    document.getElementById('hrsRemaining').textContent = hrsRemaining;
+
+    fd = document.getElementById('fromDate');
+    td = document.getElementById('toDate');
+
+    if (fd.textContent != 'Select Date/Time' && td.textContent != 'Select Date/Time') {
+        if (hrsRemaining >= 0) {
+            document.getElementById('resubmitRequest').disabled = '';
+        } else {
+            document.getElementById('resubmitRequest').disabled = 'disabled';
+        }
+    }
+}
+
+function doEdit(userid,requestDate) {
+    document.getElementById('editRequest').style.display = '';
+    document.getElementById('requestdatestring').value = requestDate;
+
+    //document.getElementById('fromDate').innerHTML = '<i>Select Date/Time</i>';
+    //document.getElementById('toDate').innerHTML = '<i>Select Date/Time</i>';
+
+    // am
+    $('select[name="time"]').append($('<option>', { value: '0000', text : '12:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0030', text : '12:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0100', text : '01:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0130', text : '01:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0200', text : '02:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0230', text : '02:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0300', text : '03:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0330', text : '03:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0400', text : '04:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0430', text : '04:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0500', text : '05:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0530', text : '05:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0600', text : '06:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0630', text : '06:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0700', text : '07:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0730', text : '07:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0800', text : '08:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0830', text : '08:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0900', text : '09:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '0930', text : '09:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '1000', text : '10:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '1030', text : '10:30 am' }));
+    $('select[name="time"]').append($('<option>', { value: '1100', text : '11:00 am' }));
+    $('select[name="time"]').append($('<option>', { value: '1130', text : '11:30 am' }));
+
+    // pm
+    $('select[name="time"]').append($('<option>', { value: '1200', text : '12:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1230', text : '12:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1300', text : '01:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1330', text : '01:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1400', text : '02:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1430', text : '02:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1500', text : '03:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1530', text : '03:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1600', text : '04:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1630', text : '04:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1700', text : '05:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1730', text : '05:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1800', text : '06:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1830', text : '06:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1900', text : '07:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '1930', text : '07:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2000', text : '08:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2030', text : '08:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2100', text : '09:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2130', text : '09:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2200', text : '10:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2230', text : '10:30 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2300', text : '11:00 pm' }));
+    $('select[name="time"]').append($('<option>', { value: '2330', text : '11:30 pm' }));
+
+    document.getElementById('hrsVA').textContent = '20';
+    document.getElementById('hrsPH').textContent = '8';
+    document.getElementById('hrsEL').textContent = '0';
+    document.getElementById('hrsBO').textContent = '2';
+    document.getElementById('hrsAccrued').textContent = '30';
+
+    console.log(userid);
+    console.log(requestDate);
+
+    $.ajax({
+        type: "POST",
+        url: "/getrequest",
+        data: {
+                id: userid,
+                requested: requestDate
+              },
+        success: function(data) {
+
+            console.log(data);
+            //console.log(typeof data);
+
+			if (typeof data == 'string') {
+				document.getElementById('status').textContent = data;
+				console.log(data);
+				return;
+			}
+
+			if (data.request.length > 0) {
+
+                p = data.request[0];
+
+                fd = document.getElementById('fromDate');
+                ft = document.getElementById('fromTime');
+                td = document.getElementById('toDate');
+                tt = document.getElementById('toTime');
+
+                sft = p.fromdate.split(" ")[1] + ' ' + p.fromdate.split(" ")[2].toLowerCase();
+                stt = p.todate.split(" ")[1] + ' ' + p.todate.split(" ")[2].toLowerCase();
+
+                console.log(p.fromdate.split(" ")[0]);
+                console.log(sft);
+                console.log(p.todate.split(" ")[0]);
+                console.log(stt);
+                console.log(p.hours);
+                console.log(p.comments);
+
+                document.getElementById('fromDate').textContent = p.fromdate.split(" ")[0];
+                document.getElementById('toDate').textContent = p.todate.split(" ")[0];
+                document.getElementById('hrsRequested').value = p.hours;
+                document.getElementById('comments').value = p.comments;
+
+                // select from time
+                for(var i=0;i<ft.options.length;i++){
+                    if (ft.options[i].text.replace(/^0/, '') == sft) {
+                        ft.selectedIndex = i;
+                        break;
+                    }
+                }
+
+                // select to time
+                for(var i=0;i<tt.options.length;i++){
+                    if (tt.options[i].text.replace(/^0/, '') == stt) {
+                        tt.selectedIndex = i;
+                        break;
+                    }
+                }
+
+                var today = new Date();
+
+                $( "#from" ).datepicker('setDate', today);
+                $( "#to" ).datepicker('setDate', today);
+
+                $( "#from" ).datepicker( "option", "maxDate", p.todate.split(" ")[0] );
+                $( "#to" ).datepicker( "option", "minDate",  p.fromdate.split(" ")[0] );
+
+                $( "#from" ).datepicker('setDate', p.fromdate.split(" ")[0]);
+                $( "#to" ).datepicker('setDate', p.todate.split(" ")[0]);
+
+                lr();
+            }
+
+        },
+        error: function(data) {
+            console.log(data.responseText);
+			document.getElementById('status').textContent = 'See Console Log';
+        }
+    });
+
+}
+
+function updateRequest() {
+    $.ajax({
+        type: "POST",
+        url: "/resubmitrequest",
+        data: {
+                id: sessionStorage.getItem('userid'),
+                fromDate: document.getElementById('fromDate').textContent,
+                fromTime: document.getElementById('fromTime').value,
+                toDate: document.getElementById('toDate').textContent,
+                toTime: document.getElementById('toTime').value,
+                hours: document.getElementById('hrsRequested').value,
+                comments: document.getElementById('comments').value,
+                requested: document.getElementById('requestdatestring').value
+              },
+        success: function(obj) {
+            console.log(obj);
+            if (obj == '1') {
+                document.getElementById('status').textContent = 'Request Resubmitted';
+                location.reload();
+            } else {
+			    document.getElementById('status').textContent = 'See Console Log';
+			}
+        },
+        error: function(data) {
+            console.log(data.responseText);
+			document.getElementById('status').textContent = 'See Console Log';
+        }
+    });
+
+}
+
+function key(keyCode) {
+    return keyCode === 8 || keyCode === 9 || keyCode === 46
+}
+
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+}
+-->
+</script>
+
+</head>
+
+<body topmargin="0" leftmargin="0" text="#000099">
+
+    <img src="{{url_for('static', filename='images/150-x-150-pix-city-seal-rev.jpg')}}" width="90" height="90" style="position:fixed;top:10;left10;"/>
+    <span id="status" class=xl244 style="font-size:smaller;position: fixed;top: 10;right: 10;"><i>Loading...</i></span>
+    <center><font size="+2">City of Long Beach</font></center>
+    <center><font size="+1">Leave Request - History</font></center>
+    <br />
+    <center>
+        <button onclick="window.location='/request';">New Request</button>
+        <span id="superTabs" style="display:none;">
+            <button onclick="window.location='/history';">History</button>
+            <button onclick="window.location='/pending';">Pending</button>
+            <button onclick="window.location='/unassigned';">Unassigned</button>
+            <button onclick="window.location='/org';">Reassign</button>
+        </span>
+    </center>
+    <br /><br />
+
+    <div id="tableContainer" class="tableContainer" style="margin: 0 auto;">
+        <table id="dataTable1" border="0" cellpadding="0" cellspacing="0" class="scrollTable">
+            <thead class="fixedHeader">
+            <tr>
+                <th> </th>
+                <th>From</th>
+                <th>To</th>
+                <th>Hours</th>
+                <th>Requested</th>
+                <th>Status</th>
+                <th>By</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody class="scrollContent">
+            <tr>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="editRequest" style="position: absolute; top:50px; left: 50%; transform: translateX(-50%); z-index: 10;
+                                background: white; display: none;">
+
+        <table cellspacing='10' cellpadding='1' border="1" style="margin: 0 auto;">
+            <tr>
+                <td>
+                    From: <span id="fromDate"></span>
+                </td>
+                <td>
+                    <select name="time" id="fromTime" onchange="lr();"></select>
+                </td>
+                <td>
+                    Until: <span id="toDate"></span>
+                </td>
+                <td>
+                    <select name="time" id="toTime" onchange="lr();"></select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" height="220" style="vertical-align:top">
+                    <div id="from"></div>
+                </td>
+                <td colspan="2" height="220" style="vertical-align:top">
+                    <div id="to"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"><span id="lr">&nbsp;</span></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    Vacation: <span id="hrsVA" title="Hard coded value for testing."></span>&nbsp;&nbsp;
+                    Personal Holiday: <span id="hrsPH" title="Hard coded value for testing."></span>&nbsp;&nbsp;
+                    Executive Leave: <span id="hrsEL" title="Hard coded value for testing."></span>&nbsp;&nbsp;
+                    Banked Overtime: <span id="hrsBO" title="Hard coded value for testing."></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:right">
+                    Total Hours of Leave Time Requested:
+                </td>
+                <td colspan="2">
+                    &nbsp;<input id="hrsRequested" maxlength="4" size="3em" onchange="calcRemaining();"/> hours
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:right">
+                    Total Leave Hours Accrued:
+                </td>
+                <td>
+                    &nbsp;<span id="hrsAccrued" title="Hard coded value for testing."></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:right">
+                    Total Leave Hours Remaining:
+                </td>
+                <td>
+                    &nbsp;<span id="hrsRemaining"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <label for="comments">Comments:</label><br />
+                    &nbsp;<textarea id="comments" rows="4" cols="50" style="resize: none; box-sizing:border-box;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <center>
+                        <button id="resubmitRequest" onclick="updateRequest()" disabled>Resubmit</button>
+                        <button id="cancelRequest" onclick="document.getElementById('editRequest').style.display = 'none';">Cancel</button>
+                    </center>
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="userid" />
+        <input type="hidden" id="requestdatestring" />
+    </div>
+</body>
+</html>
+
